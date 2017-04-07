@@ -10,7 +10,7 @@ There three tas in site.yml that we can setup Ambari step by step:
 
 - start-es
 
-- stop-se
+- stop-es
 
 
 Before excuting `ansible-playbook site.yml --tags install-es -i hosts`, you must modify these files below:
