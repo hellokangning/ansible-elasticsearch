@@ -1,0 +1,25 @@
+---
+es_java_home: "/usr/lib/jvm/java-8-openjdk-amd64"
+es_api_port: 29201
+es_http_port: 29201
+es_transport_tcp_port: 29301
+es_cluster_name: "fusion-es"
+es_rack_name: "xs"
+
+es_data_dir: "/disk2/elasticsearch/data,/disk3/elasticsearch/data,/disk4/elasticsearch/data"
+
+es_data_dir_list: 
+  - /disk2/elasticsearch/data
+  - /disk3/elasticsearch/data
+  - /disk4/elasticsearch/data
+
+es_log_dir: "/disk2/elasticsearch/log"
+es_conf_dir: "/disk2/elasticsearch/config"
+es_pid_dir: "/disk2/elasticsearch/run"
+es_user: "elasticsearch"
+es_group: "elasticsearch"
+es_max_open_files: 65536
+es_java_opts: "-Xms4g -Xmx4g"
+es_max_map_count: 262144
+es_min_master_nodes: 2
+es_unicast_hosts: "xs615:29301, xs616:29301, xs617:29301"

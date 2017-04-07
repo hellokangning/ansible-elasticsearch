@@ -1,0 +1,37 @@
+---
+- name: Install Elasticsearch for all nodes
+  hosts: all
+  roles: 
+    - elasticsearch
+  tasks: 
+    - include: roles/elasticsearch/tasks/install.yml
+      tags: 
+        - install-es
+
+- name: Config Elasticsearch for all nodes
+  hosts: all
+  roles: 
+    - elasticsearch
+  tasks:
+    - include: roles/elasticsearch/tasks/config.yml
+      tags:
+        - config-es
+
+- name: Start Elasticsearch for all nodes
+  hosts: all
+  roles: 
+    - elasticsearch
+  tasks:
+    - include: roles/elasticsearch/tasks/start.yml
+      tags:
+        - start-es
+
+- name: Stop Elasticsearch for all nodes
+  hosts: all
+  roles: 
+    - elasticsearch
+  tasks:
+    - include: roles/elasticsearch/tasks/stop.yml
+      tags:
+        - stop-es
+
