@@ -13,6 +13,17 @@
     src: scripts/kibana
     dest: /etc/init.d/kibana
 
+- name: Create directory for Kibana
+  file: 
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ kibana_user }}"
+    group: "{{ kibana_group }}"
+  with_items: 
+    - "{{ kibana_conf_dir }}"
+    - "{{ kibana_pid_dir }}"
+    - "{{ kibana_log_dir }}"
+
 - name: Copy default conf file from /etc/kibana/* to /disk2/kibana/config/
   copy:
     src: "{{ item }}"
@@ -43,3 +54,4 @@
     - "xpack.monitoring.enabled: true"
     - "xpack.graph.enabled: false"
     - "xpack.reporting.enabled: false"
+

@@ -3,4 +3,5 @@
   service: 
     name: kibana
     state: started
+  become: true
   

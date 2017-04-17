@@ -28,9 +28,12 @@ es_unicast_hosts: "xs615:29301, xs616:29301, xs617:29301"
 es_plugin: 
   - x-pack
 
-kibana_user: "elasticsearch"
-kibana_group: "elasticsearch"
+kibana_user: "kibana"
+kibana_group: "kibana"
 kibana_home: "/usr/share/kibana"
 kibana_pid_dir: "/disk2/kibana/run"
 kibana_server_port: 25601
 kibana_conf_dir: "/disk2/kibana/config"
+kibana_log_dir: "/disk2/kibana/log"
+kibana_plugin:
+  - x-pack

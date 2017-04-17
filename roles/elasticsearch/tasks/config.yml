@@ -28,8 +28,8 @@
   copy:
     src: "{{ item }}"
     dest: "{{ es_conf_dir}}"
-    owner: elasticsearch
-    group: elasticsearch
+    owner: "{{ es_user }}"
+    group: "{{ es_group }}"
   with_fileglob: 
     - /etc/elasticsearch/*
     

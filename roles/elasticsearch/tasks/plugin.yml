@@ -1,6 +1,27 @@
 ---
+- name: Chown /etc/default/elasticsearch
+  file: 
+    path: "{{ item }}"
+    owner: "{{ es_user }}"
+    group: "{{ es_group }}"
+  with_items:
+    - /etc/default/elasticsearch 
+
+- name: Chown files under /usr/share/kibana
+  file: 
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ es_user }}"
+    group: "{{ es_group }}"
+    recurse: yes
+  with_items:
+    - "{{ es_home }}" 
+
 - name: Install plugins for Elasticsearch
   command: "bin/elasticsearch-plugin install {{ item }}"
+  become: true
+  become_user: "{{ es_user }}"
+  become_method: sudo
   args:
     chdir: "{{ es_home }}"
   with_items: 

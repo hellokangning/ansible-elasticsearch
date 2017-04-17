@@ -3,3 +3,4 @@
   service:
     name: kibana
     state: stopped
+  become: true
