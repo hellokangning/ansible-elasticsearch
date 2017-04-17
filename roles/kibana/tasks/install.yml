@@ -1,0 +1,6 @@
+---
+- name: Install Kibana Debian package
+  apt:
+    name: kibana
+    state: present
+

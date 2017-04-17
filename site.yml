@@ -1,37 +1,80 @@
 ---
+- name: Do prerequisite job for ELK
+  hosts: elasticsearch
+  roles: 
+    - common
+  tasks: 
+    - include: roles/common/tasks/main.yml
+      tags: pre-elk
+
 - name: Install Elasticsearch for all nodes
-  hosts: all
+  hosts: elasticsearch
   roles: 
     - elasticsearch
   tasks: 
     - include: roles/elasticsearch/tasks/install.yml
-      tags: 
-        - install-es
+      tags: install-es
 
 - name: Config Elasticsearch for all nodes
-  hosts: all
+  hosts: elasticsearch
   roles: 
     - elasticsearch
   tasks:
     - include: roles/elasticsearch/tasks/config.yml
-      tags:
-        - config-es
+      tags: config-es
 
 - name: Start Elasticsearch for all nodes
-  hosts: all
+  hosts: elasticsearch
   roles: 
     - elasticsearch
   tasks:
     - include: roles/elasticsearch/tasks/start.yml
-      tags:
-        - start-es
+      tags: start-es
 
 - name: Stop Elasticsearch for all nodes
-  hosts: all
+  hosts: elasticsearch
   roles: 
     - elasticsearch
   tasks:
     - include: roles/elasticsearch/tasks/stop.yml
-      tags:
-        - stop-es
+      tags: stop-es
 
+- name: Install Kibana for one node
+  hosts: kibana
+  roles: 
+    - kibana
+  tasks:
+    - include: roles/kibana/tasks/install.yml
+      tags: install-kibana
+ 
+- name: Config Kibana for one node
+  hosts: kibana
+  roles:
+    - kibana
+  tasks:
+    - include: roles/kibana/tasks/config.yml
+      tags: config-kibana
+
+- name: Stop Kibana for one node
+  hosts: kibana
+  roles:
+    - kibana
+  tasks:
+    - include: roles/kibana/tasks/stop.yml
+      tags: stop-kibana
+
+- name: Install plugins for Elasticsearch on each node
+  hosts: elasticsearch
+  roles:
+    - elasticsearch
+  tasks:
+    - include: roles/elasticsearch/tasks/plugin.yml
+      tags: es-plugin
+
+- name: Install plugins for Kibana on one node
+  hosts: kibana
+  roles:
+    - kibana
+  tasks:
+    - include: roles/kibana/tasks/plugin.yml
+      tags: kibana-plugin

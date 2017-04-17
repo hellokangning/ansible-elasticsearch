@@ -3,8 +3,8 @@
   file: 
     path: "{{ item }}"
     state: directory
-    owner: elasticsearch
-    group: elasticsearch
+    owner: "{{ es_user }}"
+    group: "{{ es_group }}"
   with_items: "{{ es_data_dir_list }}"
  
 - name: Modify config file in /etc/default/elasticsearch
@@ -27,7 +27,7 @@
 - name: Copy default conf file in /etc/elasticsearch/* to /disk2/elasticsearch/config/
   copy:
     src: "{{ item }}"
-    dest: /disk2/elasticsearch/config/
+    dest: "{{ es_conf_dir}}"
     owner: elasticsearch
     group: elasticsearch
   with_fileglob: 
@@ -35,7 +35,7 @@
     
 - name: Modify configs in elasticsearch.yml
   lineinfile:
-    dest: /disk2/elasticsearch/config/elasticsearch.yml
+    dest: "{{es_conf_dir}}/elasticsearch.yml"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
   with_items:
@@ -51,14 +51,18 @@
  
 - name: Add new configs in elasticsearch.yml
   lineinfile:
-    dest: /disk2/elasticsearch/config/elasticsearch.yml
+    dest: "{{es_conf_dir}}/elasticsearch.yml"
     line: "{{ item }}"
   with_items:
     - "transport.tcp.port: {{ es_transport_tcp_port }}"
+    - "xpack.security.enabled: false"
+    - "xpack.monitoring.enabled: true"
+    - "xpack.graph.enabled: false"
+    - "xpack.watcher.enabled: false"
 
 - name: Modify log4j2.properties
   lineinfile:
-    dest: /disk2/elasticsearch/config/log4j2.properties
+    dest: "{{es_conf_dir}}/log4j2.properties"
     line: "{{ item }}"
   with_items:
     - appender.rolling.strategy.type = DefaultRolloverStrategy

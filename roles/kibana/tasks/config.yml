@@ -1,0 +1,45 @@
+---
+- name: Modify default config in /etc/default/kibana
+  lineinfile:
+    dest: /etc/default/kibana
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    - { regexp: '^user.*', line: 'user="{{ kibana_user }}"' }
+    - { regexp: '^group.*', line: 'group="{{ kibana_group }}"' }
+
+- name: Cover init.d config with customized one
+  copy:
+    src: scripts/kibana
+    dest: /etc/init.d/kibana
+
+- name: Copy default conf file from /etc/kibana/* to /disk2/kibana/config/
+  copy:
+    src: "{{ item }}"
+    dest: "{{ kibana_conf_dir}}"
+    owner: "{{ kibana_user }}"
+    group: "{{ kibana_group }}"
+  with_fileglob: 
+    - /etc/kibana/*
+
+- name: Modify default config in kibana.yml
+  lineinfile:
+    dest: "{{kibana_conf_dir}}/kibana.yml"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  with_items:
+    - { regexp: '.*server\.port:.*', line: 'server.port: {{ kibana_server_port }}' }
+    - { regexp: '.*server\.host:.*', line: 'server.host: {{ ansible_hostname }}' }
+    - { regexp: '.*server\.name:.*', line: 'server.name: {{ ansible_hostname }}' }
+    - { regexp: '.*elasticsearch\.url:.*', line: 'elasticsearch.url: "http://{{ ansible_hostname }}:{{ es_http_port}}"' }
+    - { regexp: '.*pid\.file:.*', line: 'pid.file: {{ kibana_pid_dir }}/kibana.pid' }
+
+- name: Disable xpack security for Kibana
+  lineinfile:
+    dest: "{{kibana_conf_dir}}/kibana.yml"
+    line: "{{ item }}"
+  with_items:
+    - "xpack.security.enabled: false"
+    - "xpack.monitoring.enabled: true"
+    - "xpack.graph.enabled: false"
+    - "xpack.reporting.enabled: false"

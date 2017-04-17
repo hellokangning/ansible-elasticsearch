@@ -1,0 +1,8 @@
+---
+- name: Install plugins for Kibana
+  command: "bin/kibana-plugin install {{ item }}"
+  args:
+    chdir: "{{ kibana_home }}"
+  with_items: 
+    - "{{ kibana_plugin}}"
+

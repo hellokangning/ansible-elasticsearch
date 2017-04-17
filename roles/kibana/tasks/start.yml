@@ -1,0 +1,6 @@
+---
+- name: Start Kibana as service
+  service: 
+    name: kibana
+    state: started
+  

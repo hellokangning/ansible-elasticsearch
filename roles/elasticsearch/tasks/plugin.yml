@@ -1,0 +1,8 @@
+---
+- name: Install plugins for Elasticsearch
+  command: "bin/elasticsearch-plugin install {{ item }}"
+  args:
+    chdir: "{{ es_home }}"
+  with_items: 
+    - "{{ es_plugin}}"
+
