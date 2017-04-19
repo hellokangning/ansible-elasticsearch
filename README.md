@@ -2,7 +2,9 @@
 
 This repo aims to deploy Elasticsearch with Ansible quickly.
 
-There three tas in site.yml that we can setup Ambari step by step:
+There three tas in site.yml that we can setup Elasticsearch step by step:
+
+- pre-elk
 
 - install-es
 
