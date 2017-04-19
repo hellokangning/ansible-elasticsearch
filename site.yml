@@ -78,3 +78,4 @@
   tasks:
     - include: roles/kibana/tasks/plugin.yml
       tags: kibana-plugin
+

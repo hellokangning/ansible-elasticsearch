@@ -15,12 +15,14 @@ es_data_dir_list:
   - /disk4/elasticsearch/data
 
 es_log_dir: "/disk2/elasticsearch/log"
+es_default_conf_dir: "/etc/elasticsearch"
 es_conf_dir: "/disk2/elasticsearch/config"
 es_pid_dir: "/disk2/elasticsearch/run"
 es_user: "elasticsearch"
 es_group: "elasticsearch"
 es_max_open_files: 65536
-es_java_opts: "-Xms4g -Xmx4g"
+es_java_opts: ""
+es_heap_size: "30g"
 es_max_map_count: 262144
 es_min_master_nodes: 2
 es_unicast_hosts: "xs615:29301, xs616:29301, xs617:29301"
