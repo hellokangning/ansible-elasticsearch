@@ -4,3 +4,10 @@
     name: elasticsearch
     state: started
   become: true
+  ignore_errors: true
+
+- name: Make sure Elasticsearch is up
+  wait_for:
+    port: "{{ es_http_port }}"
+    delay: 180
+    timeout: 300

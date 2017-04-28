@@ -1,6 +1,6 @@
 ---
 - name: Install Elasticsearch Debian package
   apt:
-    name: elasticsearch
+    name: elasticsearch=5.3.0
     state: present
 

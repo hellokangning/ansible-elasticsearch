@@ -25,7 +25,7 @@ es_java_opts: ""
 es_heap_size: "30g"
 es_max_map_count: 262144
 es_min_master_nodes: 2
-es_unicast_hosts: "xs615:29301, xs616:29301, xs617:29301"
+es_unicast_hosts: "xs613:29301, xs615:29301, xs616:29301, xs617:29301"
 
 es_plugin: 
   - x-pack
@@ -36,6 +36,7 @@ kibana_home: "/usr/share/kibana"
 kibana_pid_dir: "/disk2/kibana/run"
 kibana_server_port: 25601
 kibana_conf_dir: "/disk2/kibana/config"
+kibana_default_conf_file: "/etc/kibana/kibana.yml"
 kibana_log_dir: "/disk2/kibana/log"
 kibana_plugin:
   - x-pack

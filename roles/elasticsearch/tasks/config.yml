@@ -1,12 +1,12 @@
 ---
 - name: Create data directory to pass Bootstrap Check
-  file:
+  file: 
     path: "{{ item }}"
     state: directory
     owner: "{{ es_user }}"
     group: "{{ es_group }}"
   with_items: "{{ es_data_dir_list }}"
-
+ 
 - name: Modify config file in /etc/default/elasticsearch
   lineinfile:
     dest: /etc/default/elasticsearch
@@ -34,13 +34,13 @@
 - name: Copy default conf file in /etc/elasticsearch/* to /disk2/elasticsearch/config/
   copy:
     src: "{{ item }}"
-    dest: "{{ es_conf_dir }}"
+    dest: "{{ es_conf_dir }}/"
     owner: "{{ es_user }}"
     group: "{{ es_group }}"
     force: yes
     remote_src: False
-  with_fileglob:
-    - "{{ es_default_conf_dir}}/*"
+  with_fileglob: 
+    - "{{ es_default_conf_dir }}/*"
 
 - name: Modify configs in elasticsearch.yml
   lineinfile:
@@ -51,13 +51,13 @@
     - { regexp: '.*cluster\.name:.*', line: 'cluster.name: {{ es_cluster_name }}' }
     - { regexp: '.*node\.name:.*', line: 'node.name: {{ ansible_hostname }}' }
     - { regexp: '.*node\.attr\.rack:.*', line: 'node.attr.rack: {{ es_rack_name }}' }
-    - { regexp: '.*path\.data:.*', line: 'path.data: {{ es_data_dir }}' }
-    - { regexp: '.*path\.logs:.*', line: 'path.logs: {{ es_log_dir }}' }
-    - { regexp: '.*network\.host:.*', line: 'network.host: {{ ansible_hostname }}' }
-    - { regexp: '.*http\.port:.*', line: 'http.port: {{ es_http_port }}' }
-    - { regexp: '.*discovery\.zen\.minimum_master_nodes:.*', line: 'discovery.zen.minimum_master_nodes: {{ es_min_master_nodes }}' }
+    - { regexp: '.*path\.data:.*', line: 'path.data: {{ es_data_dir }}' }    
+    - { regexp: '.*path\.logs:.*', line: 'path.logs: {{ es_log_dir }}' }    
+    - { regexp: '.*network\.host:.*', line: 'network.host: {{ ansible_hostname }}' }    
+    - { regexp: '.*http\.port:.*', line: 'http.port: {{ es_http_port }}' }    
+    - { regexp: '.*discovery\.zen\.minimum_master_nodes:.*', line: 'discovery.zen.minimum_master_nodes: {{ es_min_master_nodes }}' }    
     - { regexp: '.*discovery\.zen\.ping.\unicast\.hosts:.*', line: 'discovery.zen.ping.unicast.hosts: {{ es_unicast_hosts }}' }
-
+ 
 - name: Add new configs in elasticsearch.yml
   lineinfile:
     dest: "{{ es_conf_dir }}/elasticsearch.yml"
@@ -70,13 +70,13 @@
     - "xpack.watcher.enabled: false"
 
 - name: Modify jvm.options
-  lineinfile:
+  lineinfile: 
     dest: "{{ es_conf_dir }}/jvm.options"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
   with_items:
-    - { regexp: '.*-Xms.*', line: '-Xms{{ es_heap_size }}' }
-    - { regexp: '.*-Xmx.*', line: '-Xmx{{ es_heap_size }}' }
+    - { regexp: '.*-Xms.*', line: '-Xms{{ es_heap_size}}' }
+    - { regexp: '.*-Xmx.*', line: '-Xmx{{ es_heap_size}}' }
 
 - name: Modify log4j2.properties
   lineinfile:

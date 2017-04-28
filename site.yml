@@ -1,6 +1,6 @@
 ---
 - name: Do prerequisite job for ELK
-  hosts: elasticsearch
+  hosts: all
   roles: 
     - common
   tasks: 
@@ -8,23 +8,33 @@
       tags: pre-elk
 
 - name: Install Elasticsearch for all nodes
-  hosts: elasticsearch
+  hosts: all
   roles: 
     - elasticsearch
   tasks: 
     - include: roles/elasticsearch/tasks/install.yml
       tags: install-es
 
-- name: Config Elasticsearch for all nodes
-  hosts: elasticsearch
+- name: Config Elasticsearch for data nodes
+  hosts: es_data
   roles: 
     - elasticsearch
   tasks:
     - include: roles/elasticsearch/tasks/config.yml
       tags: config-es
 
+- name: Config Elasticsearch for coordinator nodes
+  hosts: es_coordinator
+  roles: 
+    - elasticsearch
+  tasks:
+    - block:
+        - include: roles/elasticsearch/tasks/config.yml
+        - include: roles/elasticsearch/tasks/config_coordinator.yml
+      tags: config-coordinator
+
 - name: Start Elasticsearch for all nodes
-  hosts: elasticsearch
+  hosts: all
   roles: 
     - elasticsearch
   tasks:
@@ -32,7 +42,7 @@
       tags: start-es
 
 - name: Stop Elasticsearch for all nodes
-  hosts: elasticsearch
+  hosts: all
   roles: 
     - elasticsearch
   tasks:
@@ -64,7 +74,7 @@
       tags: stop-kibana
 
 - name: Install plugins for Elasticsearch on each node
-  hosts: elasticsearch
+  hosts: all
   roles:
     - elasticsearch
   tasks:

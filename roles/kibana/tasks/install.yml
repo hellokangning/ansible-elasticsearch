@@ -1,6 +1,6 @@
 ---
 - name: Install Kibana Debian package
   apt:
-    name: kibana
+    name: kibana=5.3.0
     state: present
 

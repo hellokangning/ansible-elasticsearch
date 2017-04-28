@@ -26,12 +26,12 @@
 
 - name: Copy default conf file from /etc/kibana/* to /disk2/kibana/config/
   copy:
-    src: "{{ item }}"
-    dest: "{{ kibana_conf_dir}}"
+    src: "{{ kibana_default_conf_file }}"
+    dest: "{{ kibana_conf_dir }}/"
     owner: "{{ kibana_user }}"
     group: "{{ kibana_group }}"
-  with_fileglob: 
-    - /etc/kibana/*
+    force: yes
+    remote_src: True
 
 - name: Modify default config in kibana.yml
   lineinfile:

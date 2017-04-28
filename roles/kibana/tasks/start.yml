@@ -4,4 +4,11 @@
     name: kibana
     state: started
   become: true
+  ignore_errors: true
+
+- name: Make sure Kibana is up
+  wait_for:
+    port: "{{ kibana_server_port }}"
+    delay: 180
+    timeout: 300
   

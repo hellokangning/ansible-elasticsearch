@@ -42,10 +42,13 @@
 
 ## db-[99:101]-node.example.com
 
-[elasticsearch]
+[es_data]
 xs615
 xs616
 xs617
 
+[es_coordinator]
+xs613
+
 [kibana]
-xs615
+xs613
